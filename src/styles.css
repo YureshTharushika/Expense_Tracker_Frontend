@@ -1,1 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono&display=swap');
+
+body {
+  font-family: 'Geist Mono', monospace;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+

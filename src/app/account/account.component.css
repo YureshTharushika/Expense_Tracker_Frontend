@@ -1,0 +1,11 @@
+/* account.component.css */
+ 
+  /* Add styles for fa-icon */
+  .fa-icon {
+    cursor: pointer;
+  }
+
+  .mb-2 {
+    list-style-type: none;
+  }
+  

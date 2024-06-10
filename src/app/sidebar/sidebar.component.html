@@ -1,0 +1,30 @@
+<!-- sidebar.component.html -->
+<section class="sidebar-container bg-white text-black w-64 space-y-6 py-7 px-2 shadow-md rounded-lg">
+    <div class="flex items-center space-x-2 px-4 py-2">
+      <fa-icon [icon]="faChartLine" class="text-green-500 text-xl"></fa-icon>
+      <span class="font-bold text-xl">Expense Tracker</span>
+    </div>
+    <nav class="nav-links">
+      <a class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200" routerLink="/dashboard" routerLinkActive="bg-gray-200">
+        <fa-icon [icon]="faTachometerAlt" class="text-green-500 mr-2"></fa-icon>
+        Dashboard
+      </a>
+      <a class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200" routerLink="/expenses" routerLinkActive="bg-gray-200">
+        <fa-icon [icon]="faReceipt" class="text-green-500 mr-2"></fa-icon>
+        Expenses
+      </a>
+      <a class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200" routerLink="/budget" routerLinkActive="bg-gray-200">
+        <fa-icon [icon]="faChartPie" class="text-green-500 mr-2"></fa-icon>
+        Budget
+      </a>
+      <a class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200" routerLink="/monthly-plan" routerLinkActive="bg-gray-200">
+        <fa-icon [icon]="faCalendarAlt" class="text-green-500 mr-2"></fa-icon>
+        Monthly Plan
+      </a>
+      <a class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200" routerLink="/accounts" routerLinkActive="bg-gray-200">
+        <fa-icon [icon]="faWallet" class="text-green-500 mr-2"></fa-icon>
+        Accounts
+      </a>
+    </nav>
+  </section>
+  

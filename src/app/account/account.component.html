@@ -1,0 +1,53 @@
+<div class="bg-white text-black p-4 shadow-md mb-6 rounded-lg">
+  <h1 class="text-2xl font-bold">Accounts</h1>
+</div>
+
+<!-- Add Account Tile -->
+<li class="mb-2">
+  <div (click)="openAddAccountModal()" class="p-4 bg-white shadow rounded flex items-center cursor-pointer">
+    <div class="mr-2">
+      <fa-icon [icon]="faPlusCircle" class="text-green-500"></fa-icon>
+    </div>
+    <div class="font-semibold">Add Account</div>
+  </div>
+</li>
+
+
+<!-- Account Tiles -->
+<li *ngFor="let account of accounts" class="mb-2">
+  <div class="p-4 bg-white shadow rounded flex items-center justify-between">
+    <div class="flex items-center">
+      <input type="radio" name="selectedAccount" [value]="account" (change)="onAccountChange(account)" [checked]="selectedAccount?.id === account.id" class="mr-2">
+      <div class="font-semibold">{{ account.name }}</div>
+    </div>
+    <div class="flex items-center">
+      <div>{{ account.balance | currency }}</div>
+      <button (click)="deleteAccount(account)" class="ml-4 bg-red-500 text-white p-2 rounded">
+        <fa-icon [icon]="faTrash"></fa-icon>
+      </button>
+    </div>
+  </div>
+</li>
+
+<!-- Add Account Modal -->
+<div *ngIf="isAddAccountModalOpen" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+  <div class="bg-white p-6 rounded shadow-lg">
+    <h2 class="text-xl font-bold mb-4">Add Account</h2>
+    <form [formGroup]="accountForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label for="name">Name</label>
+        <input id="name" formControlName="name" class="border p-2 mb-4 w-full">
+      </div>
+      <div>
+        <label for="balance">Balance</label>
+        <input id="balance" formControlName="balance" type="number" class="border p-2 mb-4 w-full">
+      </div>
+      <div class="flex justify-end space-x-2">
+        <button type="button" (click)="closeAddAccountModal()" class="bg-gray-500 text-white p-2 rounded">Cancel</button>
+        <button type="submit" [disabled]="!accountForm.valid" class="bg-blue-500 text-white p-2 rounded">Add Account</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
