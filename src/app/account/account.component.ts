@@ -39,29 +39,25 @@ export class AccountComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadAccounts();
-    const savedAccountId = localStorage.getItem('selectedAccountId');
-    if (savedAccountId) {
-      const accountId = parseInt(savedAccountId, 10);
-      const account = this.accounts.find(acc => acc.id === accountId);
-      if (account) {
-        this.onAccountChange(account);
-      }
-    }
+    // const savedAccountId = localStorage.getItem('selectedAccountId');
+    // if (savedAccountId) {
+    //   const accountId = parseInt(savedAccountId, 10);
+    //   const account = this.accounts.find(acc => acc.id === accountId);
+    //   if (account) {
+    //     this.onAccountChange(account);
+    //   }
+    // }
   }
 
   loadAccounts(): void {
     this.accountService.getAccounts().subscribe(accounts => {
       this.accounts = accounts;
-      if (this.accounts.length > 0 && !this.selectedAccount) {
-        const savedAccountId = localStorage.getItem('selectedAccountId');
-        if (savedAccountId) {
-          const accountId = parseInt(savedAccountId, 10);
-          const account = this.accounts.find(acc => acc.id === accountId);
-          if (account) {
-            this.onAccountChange(account);
-          }
-        } else {
-          this.onAccountChange(this.accounts[0]);
+      const storedAccountId = localStorage.getItem('selectedAccountId');
+      if (storedAccountId) {
+        const storedAccount = accounts.find(account => account.id === +storedAccountId);
+        if (storedAccount) {
+          this.selectedAccount = storedAccount;
+          this.onAccountChange(storedAccount);
         }
       }
     });
@@ -82,7 +78,7 @@ export class AccountComponent implements OnInit {
 
   onAccountChange(account: Account): void {
     this.selectedAccount = account;
-    localStorage.setItem('selectedAccountId', account.id.toString());
+    this.accountService.setSelectedAccount(account);
     this.loadExpensesByAccount(account.id);
   }
 

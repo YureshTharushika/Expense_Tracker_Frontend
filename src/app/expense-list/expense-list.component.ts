@@ -7,13 +7,14 @@ import { AccountService } from '../services/account.service';
 import { Expense } from '../models/expense.model';
 import { faPlusCircle, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-expense-list',
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule, FontAwesomeModule],
   templateUrl: './expense-list.component.html',
-  styleUrl: './expense-list.component.css'
+  styleUrls: ['./expense-list.component.css']
 })
 export class ExpenseListComponent implements OnInit {
 
@@ -28,7 +29,8 @@ export class ExpenseListComponent implements OnInit {
   constructor(
     private expenseService: ExpenseService, 
     private accountService: AccountService, 
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    private router: Router) {
       this.expenseForm = this.fb.group({
         description: ['', Validators.required],
         amount: [0, Validators.required],
@@ -38,36 +40,24 @@ export class ExpenseListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadAccounts();
-    this.loadSelectedAccount();
   }
 
   loadAccounts(): void {
     this.accountService.getAccounts().subscribe(accounts => {
       this.accounts = accounts;
+      if (accounts.length > 0) {
+        this.loadSelectedAccount();
+      }
     });
   }
 
   loadSelectedAccount(): void {
     const storedAccountId = localStorage.getItem('selectedAccountId');
     if (storedAccountId) {
-      this.accountService.getAccountById(+storedAccountId).subscribe(account => {
-        this.selectedAccount = account;
-        this.loadExpensesByAccount(account.id);
-      });
-    }
-  }
-
-  loadExpenses(): void {
-    if (this.selectedAccount) {
-      this.expenseService.getExpensesByAccount(this.selectedAccount.id).subscribe(expenses => {
-        this.expenses = expenses;
-      });
-    }
-  }
-
-  onAccountChange(): void {
-    if (this.selectedAccount) {
-      localStorage.setItem('selectedAccountId', this.selectedAccount.id.toString());
+      this.selectedAccount = this.accounts.find(account => account.id === +storedAccountId) || this.accounts[0];
+      this.loadExpensesByAccount(this.selectedAccount.id);
+    } else if (this.accounts.length > 0) {
+      this.selectedAccount = this.accounts[0];
       this.loadExpensesByAccount(this.selectedAccount.id);
     }
   }
@@ -76,6 +66,13 @@ export class ExpenseListComponent implements OnInit {
     this.expenseService.getExpensesByAccount(accountId).subscribe(expenses => {
       this.expenses = expenses;
     });
+  }
+
+  onAccountChange(): void {
+    if (this.selectedAccount) {
+      localStorage.setItem('selectedAccountId', this.selectedAccount.id.toString());
+      this.loadExpensesByAccount(this.selectedAccount.id);
+    }
   }
 
   openAddExpenseModal(): void {
@@ -88,14 +85,20 @@ export class ExpenseListComponent implements OnInit {
 
   onSubmitExpense(): void {
     if (this.expenseForm.valid && this.selectedAccount) {
-      const newExpense = {
+      const newExpense: Expense = {
         ...this.expenseForm.value,
         accountId: this.selectedAccount.id
       };
-      this.expenseService.addExpense(newExpense).subscribe(() => {
-        this.loadExpensesByAccount(this.selectedAccount!.id);
-        this.closeAddExpenseModal();
-        this.expenseForm.reset();
+      this.expenseService.addExpense(newExpense).subscribe({
+        next: () => {
+          this.loadExpensesByAccount(this.selectedAccount!.id);
+          this.expenseForm.reset();
+          this.closeAddExpenseModal();
+        },
+        error: (err) => {
+          console.error('Failed to add expense', err);
+          // Handle error appropriately
+        }
       });
     }
   }
@@ -106,4 +109,7 @@ export class ExpenseListComponent implements OnInit {
     });
   }
 
+  createAccount(): void {
+    this.router.navigate(['/accounts']); // Adjust the route as necessary
+  }
 }

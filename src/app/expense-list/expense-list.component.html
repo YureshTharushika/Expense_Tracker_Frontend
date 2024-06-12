@@ -2,18 +2,23 @@
   <h1 class="text-2xl font-bold">Expenses</h1>
 </div>
 
-<div class="mb-4">
-  <label for="account" class="block text-lg font-medium mb-2">Select Account</label>
-  <select id="account" [(ngModel)]="selectedAccount" (change)="onAccountChange()" class="border p-2 w-full">
-    <option *ngFor="let account of accounts" [ngValue]="account">{{ account.name }}</option>
-  </select>
+<div class="mb-4 flex items-center">
+  <label for="account" class="block text-lg font-medium mb-2 mr-2">Account</label>
+  <div *ngIf="accounts.length > 0">
+    <select id="account" [(ngModel)]="selectedAccount" (change)="onAccountChange()" class="border p-2 w-full">
+      <option *ngFor="let account of accounts" [ngValue]="account">{{ account.name }}</option>
+    </select>
+  </div>
+  <div *ngIf="accounts.length === 0">
+    <button (click)="createAccount()" class="bg-blue-500 text-white p-2 rounded">Create an Account</button>
+  </div>
 </div>
 
 <!-- Add Expense Tile -->
 <li class="mb-2">
-  <div (click)="openAddExpenseModal()" class="p-4 bg-white shadow rounded flex items-center cursor-pointer">
+  <div (click)="accounts.length > 0 && openAddExpenseModal()" [class.cursor-pointer]="accounts.length > 0" [class.cursor-not-allowed]="accounts.length === 0" [class.bg-gray-400]="accounts.length === 0" class="p-4 bg-white shadow rounded flex items-center">
     <div class="mr-2">
-      <fa-icon [icon]="faPlusCircle" class="text-green-500"></fa-icon>
+      <fa-icon [icon]="faPlusCircle" [class.text-green-500]="accounts.length > 0" [class.text-gray-500]="accounts.length === 0"></fa-icon>
     </div>
     <div class="font-semibold">Add Expense</div>
   </div>
@@ -53,7 +58,7 @@
       </div>
       <div class="flex justify-end space-x-2">
         <button type="button" (click)="closeAddExpenseModal()" class="bg-gray-500 text-white p-2 rounded">Cancel</button>
-        <button type="submit" [disabled]="!expenseForm.valid" class="bg-blue-500 text-white p-2 rounded">Add Expense</button>
+        <button type="submit" [disabled]="!expenseForm.valid || accounts.length === 0" class="bg-blue-500 text-white p-2 rounded">Add Expense</button>
       </div>
     </form>
   </div>
