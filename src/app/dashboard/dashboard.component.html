@@ -41,7 +41,9 @@
 <ng-template #noAccount>
   <p class="text-gray-600">Please create an account to get started.</p>
   <div class="flex justify-center mt-4">
-    <button (click)="createAccount()" class="bg-blue-500 text-white p-4 rounded-lg shadow-md">
+    <button
+    class="bg-green-500 text-white p-4 rounded-lg shadow-md hover:bg-black hover:text-white transform hover:scale-105 transition duration-300"
+      (click)="createAccount()">
       Create an Account
     </button>
   </div>

@@ -1,0 +1,59 @@
+<!-- income-list.component.html -->
+<div class="bg-white text-black p-4 shadow-md mb-6 rounded-lg">
+    <h1 class="text-2xl font-bold">Incomes</h1>
+  </div>
+  
+  <!-- Add Income Tile -->
+  <li class="mb-2">
+    <div (click)="accounts.length > 0 && addIncome()" 
+         [class.cursor-pointer]="accounts.length > 0" 
+         [class.cursor-not-allowed]="accounts.length === 0" 
+         [class.bg-gray-400]="accounts.length === 0" 
+         class="p-4 bg-white shadow rounded flex items-center">
+      <div class="mr-2">
+        <fa-icon [icon]="faPlusCircle" 
+                 [class.text-green-500]="accounts.length > 0" 
+                 [class.text-gray-500]="accounts.length === 0"></fa-icon>
+      </div>
+      <div class="font-semibold">Add Income</div>
+    </div>
+  </li>
+  
+  <ul>
+    <li *ngFor="let income of incomes" class="mb-2">
+      <div class="p-4 bg-white shadow-lg rounded-lg flex flex-col cursor-pointer relative income-tile"
+           (click)="viewIncome(income.id)">
+        <div class="mb-2 z-10">
+          <div class="font-semibold">{{ income.name }}</div>
+          <div>{{ income.amount | currency }}</div>
+          <div>{{ income.date | date }}</div>
+        </div>
+      </div>
+    </li>
+  </ul>
+  
+  <!-- Add Income Modal -->
+  <div *ngIf="isAddIncomeModalOpen" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-20">
+    <div class="bg-white p-6 rounded shadow-lg">
+      <h2 class="text-xl font-bold mb-4">Add Income</h2>
+      <form [formGroup]="incomeForm" (ngSubmit)="onSubmit()">
+        <div>
+          <label for="name">Name</label>
+          <input id="name" formControlName="name" class="border p-2 mb-4 w-full">
+        </div>
+        <div>
+          <label for="amount">Amount</label>
+          <input id="amount" formControlName="amount" type="number" class="border p-2 mb-4 w-full">
+        </div>
+        <div>
+          <label for="date">Date</label>
+          <input id="date" formControlName="date" type="date" class="border p-2 mb-4 w-full">
+        </div>
+        <div class="flex justify-end space-x-2">
+          <button type="button" (click)="closeAddIncomeModal()" class="bg-gray-500 text-white p-2 rounded">Cancel</button>
+          <button type="submit" [disabled]="!incomeForm.valid" class="bg-blue-500 text-white p-2 rounded">Add Income</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  

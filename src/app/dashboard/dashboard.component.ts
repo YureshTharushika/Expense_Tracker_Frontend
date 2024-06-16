@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 })
 export class DashboardComponent {
   expenses: Expense[] = [];
+  accounts: Account[] = [];
   selectedAccount: Account | null = null;
   totalExpenses: number = 0;
 
@@ -25,12 +26,27 @@ export class DashboardComponent {
     ) {}
 
     ngOnInit(): void {
-      this.accountService.selectedAccount$.subscribe(account => {
-        this.selectedAccount = account;
-        if (account) {
-          this.loadExpenses(account.id);
+      this.loadAccounts();
+    }
+
+    loadAccounts(): void {
+      this.accountService.getAccounts().subscribe(accounts => {
+        this.accounts = accounts;
+        if (accounts.length > 0) {
+          this.loadSelectedAccount();
         }
       });
+    }
+
+    loadSelectedAccount(): void {
+      const storedAccountId = localStorage.getItem('selectedAccountId');
+      if (storedAccountId) {
+        this.selectedAccount = this.accounts.find(account => account.id === +storedAccountId) || this.accounts[0];
+        this.loadExpenses(this.selectedAccount.id);
+      } else if (this.accounts.length > 0) {
+        this.selectedAccount = this.accounts[0];
+        this.loadExpenses(this.selectedAccount.id);
+      }
     }
 
     loadExpenses(accountId: number): void {

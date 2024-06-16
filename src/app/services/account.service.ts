@@ -16,8 +16,12 @@ export class AccountService {
 
   constructor(private http: HttpClient) {}
 
-  setSelectedAccount(account: Account): void {
+  setSelectedAccount(account: Account | null): void {
     this.selectedAccountSubject.next(account);
+    if(account){
+      localStorage.setItem('selectedAccountId', account.id.toString());
+    }
+    
   }
 
   getSelectedAccount(): Account | null {
@@ -50,7 +54,7 @@ export class AccountService {
 
   updateAccountBalance(id: number, newBalance: number): Observable<Account> {
     return this.http.put<Account>(`${this.apiUrl}/${id}/balance`, { balance: newBalance }).pipe(
-      switchMap(() => this.getAccountById(id)) // Retrieve the updated account after balance update
+      switchMap(() => this.getAccountById(id))
     );
   }
 }

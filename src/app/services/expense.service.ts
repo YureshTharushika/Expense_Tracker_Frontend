@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject, map, switchMap, tap } from 'rxjs';
+import { Observable, Subject, catchError, map, of, switchMap, tap } from 'rxjs';
 import { Expense } from '../models/expense.model';
 import { AccountService } from './account.service';
 
@@ -25,39 +25,9 @@ export class ExpenseService {
     return this.http.get<Expense>(`${this.apiUrl}/${id}`);
   }
 
-  // addExpense(expense: Expense): Observable<Expense> {
-  //     return this.http.post<Expense>(this.apiUrl, expense).pipe(
-  //         switchMap((newExpense) => {
-  //             // Update the account balance after adding the expense
-  //             return this.accountService.getAccountById(newExpense.accountId).pipe(
-  //                 switchMap((account) => {
-  //                     const newBalance = account.balance - newExpense.amount;
-  //                     return this.accountService.updateAccountBalance(account.id, newBalance).pipe(
-  //                         map(() => newExpense) // Return the newExpense after balance update
-  //                     );
-  //                 })
-  //             );
-  //         })
-  //     );
-  // }
-
   addExpense(expense: Expense): Observable<Expense> {
-    return this.http.post<Expense>(this.apiUrl, expense).pipe(
-      switchMap((newExpense) => {
-        return this.accountService.getAccountById(newExpense.accountId).pipe(
-          switchMap((account) => {
-            const newBalance = account.balance - newExpense.amount;
-            return this.accountService.updateAccountBalance(account.id, newBalance).pipe(
-              tap(() => this.accountService.setSelectedAccount({ ...account, balance: newBalance })),
-              // Return the newly created expense instead of making a second POST request
-              switchMap(() => this.http.get<Expense>(`${this.apiUrl}/${newExpense.id}`))
-            );
-          })
-        );
-      })
-    );
+    return this.http.post<Expense>(this.apiUrl, expense);
   }
-
 
   updateExpense(expense: Expense): Observable<void> {
     return this.http.put<void>(`${this.apiUrl}/${expense.id}`, expense);
@@ -69,5 +39,9 @@ export class ExpenseService {
 
   getExpensesByAccount(accountId: number): Observable<Expense[]> {
     return this.http.get<Expense[]>(`${this.apiUrl}/byAccount/${accountId}`);
+  }
+
+  getExpensesByBudgetId(budgetId: number): Observable<Expense[]> {
+    return this.http.get<Expense[]>(`${this.apiUrl}/byBudget/${budgetId}`);
   }
 }

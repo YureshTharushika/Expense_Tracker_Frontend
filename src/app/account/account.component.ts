@@ -97,7 +97,15 @@ export class AccountComponent implements OnInit {
   }
 
   deleteAccount(account: Account) {
-    // Implement account deletion logic here
+    if (confirm(`Are you sure you want to delete the account "${account.name}"?`)) {
+      this.accountService.deleteAccount(account.id).subscribe(() => {
+        this.loadAccounts();
+        if (this.selectedAccount && this.selectedAccount.id === account.id) {
+          this.selectedAccount = null;
+          this.accountService.setSelectedAccount(null);
+        }
+      });
+    }
   }
 
 }

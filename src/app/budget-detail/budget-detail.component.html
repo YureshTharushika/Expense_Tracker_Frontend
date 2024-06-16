@@ -1,0 +1,70 @@
+<!-- Banner -->
+<div class="bg-white text-black p-4 shadow-md mb-6 rounded-lg">
+  <h1 class="text-2xl font-bold">{{ budget?.name }}</h1>
+  <p class="text-gray-600">Details and expenses for the {{ budget?.name }} budget.</p>
+</div>
+
+
+<!-- Add Expense Tile -->
+<li class="mb-2">
+  <div (click)="openAddExpenseModal()"    class="p-4 bg-white shadow rounded flex items-center cursor-pointer">
+    <div class="mr-2">
+      <fa-icon [icon]="faPlusCircle" class="text-green-500"></fa-icon>
+    </div>
+    <div class="font-semibold">Add Expense</div>
+  </div>
+</li>
+
+<!-- Budget Details Section -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+  <!-- Allocated Budget Card -->
+  <div class="p-4 bg-white shadow rounded-lg">
+    <h3 class="text-xl font-bold mb-2">Allocated Budget</h3>
+    <p class="text-3xl text-green-500">{{ budget?.allocatedAmount | currency:'USD':'symbol' }}</p>
+  </div>
+
+  <!-- Total Expenses for Budget Card -->
+  <div class="p-4 bg-white shadow rounded-lg">
+    <h3 class="text-xl font-bold mb-2">Total Expenses</h3>
+    <p class="text-3xl text-red-500">{{ totalBudgetExpenses | currency:'USD':'symbol' }}</p>
+  </div>
+</div>
+
+<!-- Last 10 Expenses for the Budget -->
+<h3 class="text-xl font-bold mb-4">Latest Expenses</h3>
+<ul>
+  <li *ngFor="let expense of expenses" class="mb-2">
+    <div class="p-4 bg-white shadow rounded-lg">
+      <div class="font-semibold">{{ expense.description }}</div>
+      <div>{{ expense.amount | currency }}</div>
+      <div>{{ expense.date | date }}</div>
+    </div>
+  </li>
+</ul>
+
+
+
+<!-- Add Expense Modal -->
+<div *ngIf="isAddExpenseModalOpen" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+  <div class="bg-white p-6 rounded shadow-lg">
+    <h2 class="text-xl font-bold mb-4">Add Expense</h2>
+    <form [formGroup]="expenseForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label for="description">Description</label>
+        <input id="description" formControlName="description" class="border p-2 mb-4 w-full">
+      </div>
+      <div>
+        <label for="amount">Amount</label>
+        <input id="amount" formControlName="amount" type="number" class="border p-2 mb-4 w-full">
+      </div>
+      <div>
+        <label for="date">Date</label>
+        <input id="date" formControlName="date" type="date" class="border p-2 mb-4 w-full">
+      </div>
+      <div class="flex justify-end space-x-2">
+        <button type="button" (click)="closeAddExpenseModal()" class="bg-gray-500 text-white p-2 rounded">Cancel</button>
+        <button type="submit" [disabled]="!expenseForm.valid" class="bg-blue-500 text-white p-2 rounded">Add Expense</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+/* income-list.component.css */
+.mb-2 {
+    list-style-type: none;
+  }
+
+.income-tile {
+    position: relative;
+  }
+  
+  .income-tile .progress-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    border-radius: 4px;
+    opacity: 0.3;
+  }
+  
