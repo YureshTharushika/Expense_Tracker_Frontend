@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { faCalendarAlt, faChartLine, faChartPie, faMoneyCheckAlt, faReceipt, faSignOutAlt, faTachometerAlt, faWallet } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarAlt, faChartBar, faChartLine, faChartPie, faMoneyCheckAlt, faReceipt, faSignOutAlt, faTachometerAlt, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth.service';
@@ -22,6 +22,7 @@ export class SidebarComponent {
   faChartLine = faChartLine;
   faMoneyCheckAlt = faMoneyCheckAlt;
   faSignOutAlt = faSignOutAlt;
+  faChartBar = faChartBar;
 
   constructor(
     private authService: AuthService,

@@ -115,11 +115,11 @@ throw new Error('Method not implemented.');
     getProgressBarColor(budget: Budget): string {
       const percentage = this.getBudgetExpenditurePercentage(budget);
       if (percentage <= 50) {
-        return '#16a34a'; // Green 600
+        return '#22C55E'; // Green 500
       } else if (percentage <= 75) {
-        return '#facc15'; // Yellow 500
+        return '#FACC15'; // Yellow 400
       } else {
-        return '#dc2626'; // Red 600
+        return '#EF4444'; // Red 500
       }
     }
 

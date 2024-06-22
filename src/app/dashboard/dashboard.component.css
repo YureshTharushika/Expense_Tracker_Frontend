@@ -1,7 +1,7 @@
 /* Update the styles for budget tiles */
 .budget-tile {
-    background: linear-gradient(145deg, #ffffff, #e6e6e6);
-    box-shadow: 6px 6px 12px #c1c1c1, -6px -6px 12px #ffffff;
+    background: linear-gradient(to bottom right, #ffffff, #e0e0e0);
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1), -3px -3px 10px rgba(255, 255, 255, 1);
     transition: transform 0.2s;
     padding: 0.1rem 0.75rem; /* Adjust padding to match two rows of expense list */
     margin-bottom: 0.25rem; /* Adjust margin to match two rows of expense list */
@@ -30,6 +30,13 @@
   .shadow-lg {
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
   }
+  
+  .progress-bar {
+    height: 5px;
+    border-radius: 2px;
+    transition: width 0.3s;
+  }
+  
   
   
   
