@@ -37,7 +37,6 @@ Expense Tracker is a full-featured web application for managing your personal fi
 - **Angular** - Framework for building client applications in HTML and TypeScript
 - **Tailwind CSS** - Utility-first CSS framework
 - **Font Awesome** - Icon library for adding icons and symbols
-- **Shadcn UI** - Custom UI components styled with CSS
 
 ### Backend
 
