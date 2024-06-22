@@ -1,0 +1,41 @@
+<!-- Banner -->
+<div class="bg-white text-black p-4 shadow-md mb-6 rounded-lg">
+    <h1 class="text-2xl font-bold">Analytics</h1>
+</div>
+
+<div class="bg-white p-4 shadow-md rounded-lg">
+    <div class="flex space-x-4 border-b mb-4">
+        <button
+            (click)="selectTab('budgets')"
+            [class.border-green-500]="selectedTab === 'budgets'"
+            class="py-2 px-4 border-b-2 transition duration-300">
+            Budgets
+        </button>
+        <button
+            (click)="selectTab('expenses')"
+            [class.border-green-500]="selectedTab === 'expenses'"
+            class="py-2 px-4 border-b-2 transition duration-300">
+            Expenses
+        </button>
+        <button
+            (click)="selectTab('incomes')"
+            [class.border-green-500]="selectedTab === 'incomes'"
+            class="py-2 px-4 border-b-2 transition duration-300">
+            Incomes
+        </button>
+    </div>
+    <div *ngIf="selectedTab === 'budgets'">
+        <div class="chart-container mb-4">
+            <canvas #budgetBarChartCanvas></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas #budgetLineChartCanvas></canvas>
+        </div>
+    </div>
+    <div *ngIf="selectedTab === 'expenses'">
+        <p>Expense charts will go here.</p>
+    </div>
+    <div *ngIf="selectedTab === 'incomes'">
+        <p>Income charts will go here.</p>
+    </div>
+</div>

@@ -13,18 +13,6 @@
   </div>
 </li>
 
-
-<!-- <ul>
-  <li *ngFor="let budget of budgets" class="mb-2">
-    <div class="p-4 bg-white shadow rounded flex items-center justify-between cursor-pointer" (click)="viewBudget(budget.id)">
-      <div>
-        <div class="font-semibold">{{ budget.name }}</div>
-        <div>{{ budget.allocatedAmount | currency }}</div>
-      </div>
-    </div>
-  </li>
-</ul> -->
-
 <ul>
   <li *ngFor="let budget of budgets" class="mb-2">
     <div class="p-4 bg-white shadow-lg rounded-lg flex flex-col cursor-pointer relative budget-tile"

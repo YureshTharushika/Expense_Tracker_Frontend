@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { ExpenseFormComponent } from "../expense-form/expense-form.component";
 import { faPlusCircle, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AuthService } from '../services/auth.service';
 
 @Component({
     selector: 'app-account',
@@ -26,10 +27,12 @@ export class AccountComponent implements OnInit {
 
   faPlusCircle = faPlusCircle;
   faTrash = faTrash;
+  loggedInUserId: string = "";
 
   constructor(
     private fb: FormBuilder, 
-    private accountService: AccountService, 
+    private accountService: AccountService,
+    private authService: AuthService, 
     private expenseService: ExpenseService) {
     this.accountForm = this.fb.group({
       name: ['', Validators.required],
@@ -39,14 +42,7 @@ export class AccountComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadAccounts();
-    // const savedAccountId = localStorage.getItem('selectedAccountId');
-    // if (savedAccountId) {
-    //   const accountId = parseInt(savedAccountId, 10);
-    //   const account = this.accounts.find(acc => acc.id === accountId);
-    //   if (account) {
-    //     this.onAccountChange(account);
-    //   }
-    // }
+    this.fetechUser();
   }
 
   loadAccounts(): void {
@@ -63,9 +59,24 @@ export class AccountComponent implements OnInit {
     });
   }
 
+  fetechUser(): void{
+    this.authService.getUserInfo().subscribe(
+      (userInfo: any) => {
+        this.loggedInUserId = userInfo.userId; 
+      },
+      (error) => {
+        console.error('Error fetching user info:', error);
+      }
+    );
+  }
+
   onSubmit(): void {
     if (this.accountForm.valid) {
-      this.accountService.addAccount(this.accountForm.value).subscribe(newAccount => {
+      const accountData = {
+        ...this.accountForm.value,
+        userId: this.loggedInUserId
+      };
+      this.accountService.addAccount(accountData).subscribe(newAccount => {
         this.loadAccounts();
         this.accountForm.reset();
         this.closeAddAccountModal();
@@ -74,6 +85,7 @@ export class AccountComponent implements OnInit {
         }
       });
     }
+    
   }
 
   onAccountChange(account: Account): void {

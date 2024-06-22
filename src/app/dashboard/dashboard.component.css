@@ -1,0 +1,35 @@
+/* Update the styles for budget tiles */
+.budget-tile {
+    background: linear-gradient(145deg, #ffffff, #e6e6e6);
+    box-shadow: 6px 6px 12px #c1c1c1, -6px -6px 12px #ffffff;
+    transition: transform 0.2s;
+    padding: 0.1rem 0.75rem; /* Adjust padding to match two rows of expense list */
+    margin-bottom: 0.25rem; /* Adjust margin to match two rows of expense list */
+  }
+  
+  .budget-tile:hover {
+    transform: scale(1.02);
+  }
+  
+  .budget-tile .progress-bar {
+    border-radius: 0.375rem; /* Border radius for the progress bar */
+  }
+  
+  .bg-white {
+    background-color: #ffffff;
+  }
+  
+  .p-6 {
+    padding: 1.5rem;
+  }
+  
+  .rounded {
+    border-radius: 0.375rem;
+  }
+  
+  .shadow-lg {
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+  }
+  
+  
+  

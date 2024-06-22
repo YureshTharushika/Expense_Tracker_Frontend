@@ -1,7 +1,10 @@
 <!-- Banner -->
-<div class="bg-white text-black p-4 shadow-md mb-6 rounded-lg">
+<div class="bg-white text-black p-4 shadow-md mb-6 rounded-lg flex justify-between items-center">
   <h1 class="text-2xl font-bold">Dashboard</h1>
+  <p class="text-sm">Logged in: {{ loggedInUserEmail }}</p>
 </div>
+
+
 
 <!-- Welcome Section -->
 <div class="mb-6">
@@ -10,33 +13,86 @@
 </div>
 
 <div *ngIf="selectedAccount; else noAccount">
-  <!-- Total Balance and Total Expenses -->
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-    <!-- Total Balance Card -->
-    <div class="p-4 bg-white shadow rounded-lg">
-      <h3 class="text-xl font-bold mb-2">Total Balance</h3>
-      <p class="text-3xl text-green-500">{{ selectedAccount.balance | currency:'USD':'symbol' }}</p>
+  <div class="mb-6">
+    <!-- Total Balance and Total Expenses -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+      <!-- Total Balance Card -->
+      <div class="p-4 bg-white shadow rounded-lg">
+        <h3 class="text-xl font-bold mb-2">Total Balance</h3>
+        <p class="text-3xl text-green-500">{{ selectedAccount.balance | currency:'USD':'symbol' }}</p>
+      </div>
+
+      <!-- Total Expenses Card -->
+      <div class="p-4 bg-white shadow rounded-lg">
+        <h3 class="text-xl font-bold mb-2">Total Expenses</h3>
+        <p class="text-3xl text-red-500">{{ totalExpenses | currency:'USD':'symbol' }}</p>
+      </div>
     </div>
 
-    <!-- Total Expenses Card -->
-    <div class="p-4 bg-white shadow rounded-lg">
-      <h3 class="text-xl font-bold mb-2">Total Expenses</h3>
-      <p class="text-3xl text-red-500">{{ totalExpenses | currency:'USD':'symbol' }}</p>
+    <!-- Overview Tiles -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
+      <!-- Latest Expenses -->
+      <div>
+        <h3 class="text-xl font-bold mb-4">Latest Expenses</h3>
+        <div *ngIf="expenses.length > 0; else noExpenses" class="overflow-x-auto">
+          <table class="min-w-full bg-white shadow-md rounded-lg">
+            <thead class="bg-gray-200">
+              <tr>
+                <th class="py-2 px-4 text-left">Description</th>
+                <th class="py-2 px-4 text-left">Amount</th>
+                <th class="py-2 px-4 text-left">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let expense of expenses.slice(0, 5)" class="border-t">
+                <td class="py-2 px-4">{{ expense.description }}</td>
+                <td class="py-2 px-4">{{ expense.amount | currency }}</td>
+                <td class="py-2 px-4">{{ expense.date | date }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <ng-template #noExpenses>
+          <p class="text-gray-600">Looks like there are no expenses here yet. <button class="bg-green-500 text-white p-2 rounded-lg shadow-md hover:bg-black hover:text-white transform hover:scale-105 transition duration-300" (click)="createExpense()">Create Expense</button></p>
+        </ng-template>
+      </div>
+
+      <!-- Recent Budgets -->
+      <div>
+        <h3 class="text-xl font-bold mb-4">Recent Budgets</h3>
+        <ul *ngIf="budgets.length > 0; else noBudgets">
+          <!-- <li *ngFor="let budget of budgets.slice(0, 5)" class="mb-2">
+            <div class="p-4 bg-white shadow rounded-lg">
+              <div class="font-semibold">{{ budget.name }}</div>
+              <div>{{ budget.allocatedAmount | currency }}</div>
+            </div>
+          </li> -->
+
+          <li *ngFor="let budget of budgets.slice(0, 5)" class="mb-2">
+            <div class="p-4 bg-white shadow-lg rounded-lg flex flex-col cursor-pointer relative budget-tile"
+                 (click)="viewBudget(budget.id)"
+                 [style.background-image]="'linear-gradient(to right, ' + getProgressBarColor(budget) + ' ' + getBudgetExpenditurePercentage(budget) + '%, #ffffff ' + getBudgetExpenditurePercentage(budget) + '%)'">
+              <div class="progress-bar"
+                   [ngStyle]="{
+                     'width': getBudgetExpenditurePercentage(budget) + '%',
+                     'background-color': getProgressBarColor(budget)
+                   }"></div>
+              <div class="mb-2 z-10">
+                <div class="font-semibold">{{ budget.name }}</div>
+                <div>{{ budget.allocatedAmount | currency }}</div>
+              </div>
+              <div class="text-right text-sm text-gray-600 mt-1 z-10">{{ getBudgetExpenditurePercentage(budget).toFixed(2) }}% expended</div>
+            </div>
+          </li>
+        </ul>
+        <ng-template #noBudgets>
+          <p class="text-gray-600">Looks like there are no budgets here yet. <button class="bg-green-500 text-white p-2 rounded-lg shadow-md hover:bg-black hover:text-white transform hover:scale-105 transition duration-300" (click)="createBudget()">Create Budget</button></p>
+        </ng-template>
+      </div>
     </div>
   </div>
-
-  <!-- Last 10 Expenses -->
-  <h3 class="text-xl font-bold mb-4">Latest Expenses</h3>
-  <ul>
-    <li *ngFor="let expense of expenses" class="mb-2">
-      <div class="p-4 bg-white shadow rounded-lg">
-        <div class="font-semibold">{{ expense.description }}</div>
-        <div>{{ expense.amount | currency }}</div>
-        <div>{{ expense.date | date }}</div>
-      </div>
-    </li>
-  </ul>
 </div>
+
 
 <ng-template #noAccount>
   <p class="text-gray-600">Please create an account to get started.</p>

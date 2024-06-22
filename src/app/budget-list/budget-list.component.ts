@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Budget } from '../models/budget.model';
 import { BudgetService } from '../services/budget.service';
 import { Router } from '@angular/router';
@@ -18,7 +18,7 @@ import { ExpenseService } from '../services/expense.service';
   templateUrl: './budget-list.component.html',
   styleUrl: './budget-list.component.css'
 })
-export class BudgetListComponent {
+export class BudgetListComponent implements OnInit {
 
   budgets: Budget[] = [];
   accounts: Account[] = [];
@@ -45,7 +45,6 @@ export class BudgetListComponent {
 
   ngOnInit(): void {
     this.loadAccounts();
-    // console.log(this.getBudgetTileClass(this.budgets[0]));
   }
 
   loadAccounts(): void {
