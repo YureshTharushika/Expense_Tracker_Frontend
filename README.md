@@ -1,27 +1,95 @@
-# ExpenseTracker
+# Expense Tracker
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.2.
+![Expense Tracker Screenshot](./screenshots/dashboard.png)
 
-## Development server
+## Overview
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Expense Tracker is a full-featured web application for managing your personal finances. It allows users to track their incomes, expenses, and budgets, providing a comprehensive overview of their financial status. The application includes authentication features and ensures data is secure and accessible only to authenticated users.
 
-## Code scaffolding
+## Features
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **Authentication**
+  - User registration and login
+  - Secure access to application features
+- **Dashboard**
+  - Overview of total balance and expenses
+  - Latest expenses and budgets
+- **Expense Management**
+  - Add, edit, and delete expenses
+  - Categorize expenses for better tracking
+- **Income Management**
+  - Add, edit, and delete incomes
+  - Link incomes to specific accounts
+- **Budget Management**
+  - Create, edit, and delete budgets
+  - Track budget expenditure with visual indicators
+- **Analytics**
+  - Visual representation of expenses and incomes
+  - Detailed charts and graphs
+- **Accounts**
+  - Manage multiple accounts
+  - Track expenses and incomes per account
 
-## Build
+## Technologies Used
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Frontend
 
-## Running unit tests
+- **Angular** - Framework for building client applications in HTML and TypeScript
+- **Tailwind CSS** - Utility-first CSS framework
+- **Font Awesome** - Icon library for adding icons and symbols
+- **Shadcn UI** - Custom UI components styled with CSS
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Backend
 
-## Running end-to-end tests
+- **.NET Core 8** - Framework for building web applications and services
+- **Entity Framework Core** - ORM for data access
+- **ASP.NET Core Identity** - Authentication and authorization framework
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### Database
 
-## Further help
+- **SQL Server** - Relational database management system
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Setup and Installation
+
+1. **Clone the repository:**
+   ```sh
+   git clone https://github.com/yourusername/expense-tracker.git
+   cd expense-tracker
+
+2. **Install Dependencies**
+    ```sh
+   npm install
+
+3. **Start the Development Server**
+    ```sh
+   ng serve
+
+## Screenshots
+
+### Login
+![Login Screenshot](./screenshots/dashboard.png)
+
+### Register
+![Register Screenshot](./screenshots/register.png)
+
+### Dashboard
+![Dashboard Screenshot](./screenshots/dashboard.png)
+
+### Expenses
+![Expenses Screenshot](./screenshots/expenses.png)
+
+### Incomes
+![Incomes Screenshot](./screenshots/incomes.png)
+
+### Budgets
+![Budgets Screenshot](./screenshots/budgets.png)
+
+## Contributing
+
+Contributions are welcome! Please create an issue first to discuss any major changes.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a pull request
