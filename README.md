@@ -65,14 +65,14 @@ Expense Tracker is a full-featured web application for managing your personal fi
 
 ## Screenshots
 
-### Login
+### Dashboard
 ![Login Screenshot](./screenshots/dashboard.png)
 
-### Register
-![Register Screenshot](./screenshots/register.png)
+### Login
+![Register Screenshot](./screenshots/login.png)
 
-### Dashboard
-![Dashboard Screenshot](./screenshots/dashboard.png)
+### Register
+![Dashboard Screenshot](./screenshots/register.png)
 
 ### Expenses
 ![Expenses Screenshot](./screenshots/expenses.png)
@@ -82,6 +82,12 @@ Expense Tracker is a full-featured web application for managing your personal fi
 
 ### Budgets
 ![Budgets Screenshot](./screenshots/budgets.png)
+
+### Analytics
+![Budgets Screenshot](./screenshots/analytics.png)
+
+### Accounts
+![Budgets Screenshot](./screenshots/accounts.png)
 
 ## Contributing
 
