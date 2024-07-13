@@ -52,7 +52,7 @@ Expense Tracker is a full-featured web application for managing your personal fi
 
 1. **Clone the repository:**
    ```sh
-   git clone https://github.com/yourusername/expense-tracker.git
+   git clone https://github.com/YureshTharushika/Expense_Tracker_Frontend.git
    cd expense-tracker
 
 2. **Install Dependencies**
